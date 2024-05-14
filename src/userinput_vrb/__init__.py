@@ -20,6 +20,7 @@ the characters passed in choices. A default may be given.
 """
 
 from getpass import getpass
+from typing import Callable
 
 def input_with_default(msg: str, dflt: str) -> str:
     """read string from stdin. If empty, return dflt.
@@ -33,11 +34,14 @@ def input_with_default(msg: str, dflt: str) -> str:
     """
     return input(f"{msg} [{dflt}]: ").strip() or dflt
 
-def getpass_not_empty(msg: str) -> str:
+def getpass_not_empty(msg: str, *, check_fn: Callable[[str], bool]|None=None) -> str:
     """read password from stdin, don't allow empty password.
+    Optionally, check password rules.
 
     Args:
         msg (str): prompt for input
+        check_fn (Callable, optional): user supplied function to check password rules.
+            Must return True, if the password entered is OK. Defaults to None (OK).
 
     Returns:
         str: password read from stdin
@@ -45,9 +49,12 @@ def getpass_not_empty(msg: str) -> str:
     passwd = ""
     while not passwd:
         passwd = getpass(msg)
+        if check_fn:
+            if not check_fn(passwd):
+                passwd = ""
     return passwd
     
-def choose_from(msg: str = "", choices: str = "yn", 
+def choose_from(msg: str = "", choices: str = "yn",
                 end: str = ":", dflt: str = "") -> str:
     """read character from stdin. The user must input one of
     the characters passed in choices (all characters will be
