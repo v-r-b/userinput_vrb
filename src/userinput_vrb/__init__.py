@@ -54,7 +54,7 @@ def getpass_not_empty(msg: str, *, check_fn: Callable[[str], bool]|None=None) ->
                 passwd = ""
     return passwd
     
-def choose_from(msg: str = "", choices: str = "yn",
+def choose_from(msg: str = "", choices: str = "yn", *,
                 end: str = ":", dflt: str = "") -> str:
     """read character from stdin. The user must input one of
     the characters passed in choices (all characters will be
