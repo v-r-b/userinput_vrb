@@ -2,6 +2,9 @@
 
 Helper functions for console user input.
 
+  - On PyPI: https://pypi.org/project/userinput-vrb/
+  - On GitHub: https://github.com/v-r-b/userinput_vrb 
+
 This module defines:
 
 ```function input_with_default()```
